@@ -6,16 +6,16 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function SignUpDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="sm" variant={'default'}>
+        <Button size="sm" variant={"default"}>
           Sign Up
         </Button>
       </DialogTrigger>
@@ -23,18 +23,20 @@ export function SignUpDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Sign up</DialogTitle>
-          <DialogDescription>Choose the type of account you want to sign up!</DialogDescription>
+          <DialogDescription>
+            Choose the type of account you want to sign up!
+          </DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-4">
           <DialogClose asChild>
             <Button variant="secondary" asChild>
-              <Link href="/">Competitor</Link>
+              <Link href="/sign-up/competitor">Competitor</Link>
             </Button>
           </DialogClose>
           <DialogClose asChild>
             <Button variant="secondary" asChild>
-              <Link href="/">Organization</Link>
+              <Link href="/sign-up/organization">Organization</Link>
             </Button>
           </DialogClose>
         </div>
