@@ -1,7 +1,5 @@
-import DeployButton from '@/components/deploy-button';
 import { EnvVarWarning } from '@/components/env-var-warning';
 import HeaderAuth from '@/components/header-auth';
-import { ThemeSwitcher } from '@/components/theme-switcher';
 import { hasEnvVars } from '@/utils/supabase/check-env-vars';
 import { GeistSans } from 'geist/font/sans';
 import { ThemeProvider } from 'next-themes';
@@ -15,6 +13,10 @@ export const metadata = {
   title: 'Zawody wędkarskie - Dołącz i zarejestruj się już dziś!',
   description:
     'Zarejestruj się na oficjalne i nieoficjalne zawody wędkarskie dzięki naszej aplikacji webowej. Twórz własne wydarzenia lub dołącz do istniejących - prosto, szybko i wygodnie!',
+};
+
+const dynamicCopyright = () => {
+  return `${new Date().getFullYear()} Fish Tournament`;
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,18 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="flex flex-col gap-20 max-w-5xl p-5">{children}</div>
 
               <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                <p>
-                  Powered by{' '}
-                  <a
-                    href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                    target="_blank"
-                    className="font-bold hover:underline"
-                    rel="noreferrer"
-                  >
-                    Supabase
-                  </a>
-                </p>
-                <ThemeSwitcher />
+                <p>&copy; {dynamicCopyright()}</p>
               </footer>
             </div>
           </main>
