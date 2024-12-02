@@ -104,7 +104,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
 
           <FormField
             control={form.control}
-            name="email"
+            name="firstname"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Imię</FormLabel>
@@ -118,7 +118,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
 
           <FormField
             control={form.control}
-            name="email"
+            name="lastname"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nazwisko</FormLabel>
