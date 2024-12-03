@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -35,6 +36,7 @@ import {
   FormMessage as StatusMessage,
   Message,
 } from "@/components/form-message";
+import { SubmitButton } from "@/components/submit-button";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -46,7 +48,16 @@ const formSchema = z.object({
   nationality: z.enum(["pl"]),
 });
 
-export default function Signup({ searchParams }: { searchParams: Message }) {
+export default function Signup(props: { searchParams: Promise<Message> }) {
+  const searchParams = React.use(props.searchParams);
+  if ("message" in searchParams) {
+    return (
+      <div className="flex h-screen w-full flex-1 items-center justify-center gap-2 p-4 sm:max-w-md">
+        <StatusMessage message={searchParams} />
+      </div>
+    );
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -229,8 +240,8 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
             )}
           />
 
-          <Button type="submit">Załóż konto</Button>
-          {/* <StatusMessage messagePromise={searchParams} /> */}
+          <SubmitButton pendingText="Proszę czekać..">Załóż konto</SubmitButton>
+          <StatusMessage message={searchParams} />
         </form>
       </Form>
     </>
