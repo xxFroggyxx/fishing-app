@@ -39,10 +39,19 @@ import {
 import { SubmitButton } from "@/components/submit-button";
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6).max(20),
-  firstname: z.string(),
-  lastname: z.string(),
+  email: z.string().email({ message: "Podaj prawidłowy adres e-mail" }),
+  password: z
+    .string()
+    .min(6, { message: "Hasło musi mieć co najmniej 6 znaków" })
+    .max(20, { message: "Hasło może mieć maksymalnie 20 znaków" }),
+  firstname: z
+    .string()
+    .min(2, { message: "Imię musi mieć co najmniej 2 znaki" })
+    .max(50, { message: "Imię może mieć maksymalnie 50 znaków" }),
+  lastname: z
+    .string()
+    .min(2, { message: "Nazwisko musi mieć co najmniej 2 znaki" })
+    .max(50, { message: "Nazwisko może mieć maksymalnie 50 znaków" }),
   dayOfBirth: z.date(),
   gender: z.enum(["female", "male"]),
   nationality: z.enum(["pl"]),
