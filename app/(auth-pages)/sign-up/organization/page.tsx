@@ -17,8 +17,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6).max(20),
+  email: z.string().email({ message: "Podaj prawidłowy adres e-mail" }),
+  password: z
+    .string()
+    .min(6, { message: "Hasło musi mieć co najmniej 6 znaków" })
+    .max(20, { message: "Hasło może mieć maksymalnie 20 znaków" }),
   organizationName: z.string(),
   address: z.string(),
   phone: z.string(),
