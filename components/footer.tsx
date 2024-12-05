@@ -1,4 +1,5 @@
 import FooterSection from "@/components/footer-section";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
 import React from "react";
 
@@ -57,7 +58,9 @@ export default function Footer() {
             </li>
           </ul>
         </FooterSection>
-        <p className="col-span-1 sm:col-span-3">&copy; {dynamicCopyright()}</p>
+        <p className="col-span-1 sm:col-span-3">
+          &copy; {dynamicCopyright()} <ThemeSwitcher />
+        </p>
       </div>
     </footer>
   );

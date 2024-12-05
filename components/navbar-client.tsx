@@ -5,7 +5,6 @@ import MenuIcon from "@/components/menu-icon";
 import CloseIcon from "@/components/close-icon";
 import { Button } from "@/components/ui/button";
 import { SignUpDialog } from "@/components/signup-dialog";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import { useEffect, useState } from "react";
 import { signOutAction } from "@/app/actions";
 
@@ -59,7 +58,6 @@ export default function NavbarClient({ user }: any) {
               <Link href="/sign-in">Zaloguj się</Link>
             </Button>
             <SignUpDialog />
-            <ThemeSwitcher />
           </div>
         )}
 
