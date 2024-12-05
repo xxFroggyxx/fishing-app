@@ -46,17 +46,17 @@ export default function NavbarClient({ user }: any) {
         </div>
         {user ? (
           <div className="hidden lg:flex lg:items-center lg:gap-4">
-            Hey, {user.email}!
+            Hej, {user.email}!
             <form action={signOutAction}>
               <Button type="submit" variant={"outline"}>
-                Sign out
+                Wyloguj się
               </Button>
             </form>
           </div>
         ) : (
           <div className="hidden lg:flex lg:gap-2">
             <Button asChild size="sm" variant={"outline"}>
-              <Link href="/sign-in">Sign in</Link>
+              <Link href="/sign-in">Zaloguj się</Link>
             </Button>
             <SignUpDialog />
             <ThemeSwitcher />
@@ -85,17 +85,17 @@ export default function NavbarClient({ user }: any) {
             <div className="" onClick={handleCloseMenu}>
               {user ? (
                 <div className="flex items-center gap-2">
-                  Hey, {user.email}!
+                  Hej, {user.email}!
                   <form action={signOutAction}>
                     <Button type="submit" variant={"outline"}>
-                      Sign out
+                      Wyloguj się
                     </Button>
                   </form>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <Button asChild size="sm" variant={"outline"}>
-                    <Link href="/sign-in">Sign in</Link>
+                    <Link href="/sign-in">Zaloguj się</Link>
                   </Button>
                   <SignUpDialog />
                 </div>

@@ -16,27 +16,27 @@ export function SignUpDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <Button size="sm" variant={"default"}>
-          Sign Up
+          Zarejestruj się
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Sign up</DialogTitle>
+          <DialogTitle>Zarejestruj się</DialogTitle>
           <DialogDescription>
-            Choose the type of account you want to sign up!
+            Wybierz rodzaj konta, które chcesz założyć!
           </DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-4">
           <DialogClose asChild>
             <Button variant="secondary" asChild>
-              <Link href="/sign-up/competitor">Competitor</Link>
+              <Link href="/sign-up/competitor">Zawodnik</Link>
             </Button>
           </DialogClose>
           <DialogClose asChild>
             <Button variant="secondary" asChild>
-              <Link href="/sign-up/organization">Organization</Link>
+              <Link href="/sign-up/organization">Organizator</Link>
             </Button>
           </DialogClose>
         </div>
