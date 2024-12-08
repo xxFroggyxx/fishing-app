@@ -37,7 +37,7 @@ export default function NavbarClient({ user }: any) {
         <div className="flex items-center gap-5 font-semibold">
           <Link href={"/"}>Fish Tournament App</Link>
         </div>
-        <div className="hidden lg:flex lg:gap-8 [&>a]:transition-colors hover:[&>a]:text-white/50">
+        <div className="hidden lg:flex lg:gap-8 [&>a]:transition-colors hover:[&>a]:text-muted-foreground">
           <Link href={"/"}>O nas</Link>
           <Link href={"/"}>Zawody</Link>
           <Link href={"/"}>Blog</Link>
