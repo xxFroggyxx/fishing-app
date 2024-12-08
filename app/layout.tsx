@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
+import { Rubik } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Footer from "@/components/footer";
@@ -16,13 +16,17 @@ export const metadata: Metadata = {
     "Zarejestruj się na oficjalne i nieoficjalne zawody wędkarskie dzięki naszej aplikacji webowej. Twórz własne wydarzenia lub dołącz do istniejących - prosto, szybko i wygodnie!",
 };
 
+const rubik = Rubik({
+  subsets: ["latin"],
+});
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl" className={GeistSans.className} suppressHydrationWarning>
+    <html lang="pl" className={rubik.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
         <ThemeProvider
           attribute="class"
