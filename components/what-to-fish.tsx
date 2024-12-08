@@ -39,7 +39,7 @@ export default function WhatToFish() {
 
   return (
     <div className="flex flex-col gap-4 rounded-lg border px-8 py-16">
-      <h2 className="text-2xl font-bold">Co polecamy aktualnie wędkować?</h2>
+      <h2 className="text-3xl font-bold">Co polecamy aktualnie wędkować?</h2>
       <p>{renderRecommendation()}</p>
     </div>
   );
