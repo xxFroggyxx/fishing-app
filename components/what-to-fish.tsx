@@ -25,7 +25,7 @@ export default function WhatToFish() {
   }, []);
 
   const renderRecommendation = () => {
-    if (!recommendation) return null;
+    if (!recommendation) return "Ładowanie..";
 
     const [month, ...rest] = recommendation.split(":");
     const description = rest.join(":").trim();
