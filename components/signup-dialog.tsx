@@ -8,14 +8,28 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
+interface SignUpDialogProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  btnVariant:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+}
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export function SignUpDialog() {
+export function SignUpDialog({
+  btnVariant = "default",
+  className,
+}: SignUpDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="sm" variant={"default"}>
+        <Button size="sm" variant={btnVariant} className={className}>
           Zarejestruj się
         </Button>
       </DialogTrigger>
