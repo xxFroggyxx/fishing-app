@@ -37,6 +37,7 @@ import {
   Message,
 } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
+import { encodedRedirect } from "@/utils/utils";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Podaj prawidłowy adres e-mail" }),
@@ -80,9 +81,30 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    debugger;
+    let res;
+    try {
+      res = await fetch("/sign-up/api/competitor", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      return encodedRedirect(
+        "error",
+        "/sign-up/competitor",
+        "Nie udało się połączyć z serwerem.",
+      );
+    }
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return encodedRedirect("error", "/sign-up/competitor", data.error);
+    }
+
+    return encodedRedirect("success", "/sign-up/competitor", data.message);
   }
 
   return (
