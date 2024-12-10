@@ -10,7 +10,7 @@ import {
 
 interface SignUpDialogProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  btnVariant:
+  btnVariant?:
     | "default"
     | "destructive"
     | "outline"
