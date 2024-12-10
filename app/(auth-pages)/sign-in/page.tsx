@@ -45,7 +45,6 @@ export default function Login(props: { searchParams: Promise<Message> }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    debugger;
     let res;
     try {
       res = await fetch("/sign-in/api", {
