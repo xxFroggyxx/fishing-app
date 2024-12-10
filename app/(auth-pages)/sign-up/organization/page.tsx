@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,6 +16,12 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { encodedRedirect } from "@/utils/utils";
+
+import {
+  FormMessage as StatusMessage,
+  Message,
+} from "@/components/form-message";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Podaj prawidłowy adres e-mail" }),
@@ -27,7 +34,8 @@ const formSchema = z.object({
   phone: z.string(),
 });
 
-export default function Signup() {
+export default function Signup(props: { searchParams: Promise<Message> }) {
+  const searchParams = React.use(props.searchParams);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,9 +47,29 @@ export default function Signup() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    let res;
+    try {
+      res = await fetch("/sign-up/api/organization", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      return encodedRedirect(
+        "error",
+        "/sign-up/organization",
+        "Nie udało się połączyć z serwerem.",
+      );
+    }
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return encodedRedirect("error", "/sign-up/organization", data.error);
+    }
+
+    return encodedRedirect("success", "/sign-up/organization", data.message);
   }
   return (
     <>
@@ -129,6 +157,7 @@ export default function Signup() {
           />
 
           <Button type="submit">Załóż konto</Button>
+          <StatusMessage message={searchParams} />
         </form>
       </Form>
     </>
