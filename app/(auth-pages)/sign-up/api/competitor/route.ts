@@ -38,12 +38,14 @@ export async function POST(request: Request) {
     } = parsedData;
 
     // Sprawdzenie unikalności e-maila
-    const { count } = await supabase
-      .from("competitors")
-      .select("email", { count: "exact" })
-      .eq("email", email);
+    const { data: isUnique, error: emailCheckError } = await supabase.rpc(
+      "is_email_unique",
+      {
+        email,
+      },
+    );
 
-    if (count !== null) {
+    if (!isUnique) {
       return NextResponse.json(
         { error: "Użytkownik z tym e-mailem już istnieje." },
         { status: 400 },
@@ -53,7 +55,10 @@ export async function POST(request: Request) {
     const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json(
+        { error: `bk${error.message}` },
+        { status: 400 },
+      );
     }
 
     const id = data.user?.id as string;
