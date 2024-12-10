@@ -17,9 +17,9 @@ const loginSchema = z.object({
   password: z.string().min(6).max(20),
 });
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const body = (await req.json()) as LoginRequest;
+    const body = (await request.json()) as LoginRequest;
     const supabase = await createClient();
 
     const { email, password } = loginSchema.parse(body);
