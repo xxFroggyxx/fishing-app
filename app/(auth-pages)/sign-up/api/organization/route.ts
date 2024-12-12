@@ -52,10 +52,7 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      return NextResponse.json(
-        { error: `test${error.message}` },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
     const id = data.user?.id as string;

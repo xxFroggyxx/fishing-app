@@ -55,10 +55,7 @@ export async function POST(request: Request) {
     const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
-      return NextResponse.json(
-        { error: `bk${error.message}` },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: `${error.message}` }, { status: 400 });
     }
 
     const id = data.user?.id as string;
