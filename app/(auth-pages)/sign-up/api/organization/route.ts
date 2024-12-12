@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClientAdmin } from "@/utils/supabase/admin-server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -24,7 +24,7 @@ const organizationSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const supabase = await createClient();
+    const supabase = await createClientAdmin();
     const body = await request.json();
 
     const parsedData = organizationSchema.parse(body);
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
     const { error: profileError } = await supabase
       .from("organizations")
       .insert({
-        id: id,
+        user_id: id,
         organization_name: organizationName,
         address,
         phone,

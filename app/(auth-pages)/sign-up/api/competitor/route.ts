@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClientAdmin } from "@/utils/supabase/admin-server";
 import { format } from "date-fns";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -23,7 +23,7 @@ const competitorSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const supabase = await createClient();
+    const supabase = await createClientAdmin();
 
     const parsedData = competitorSchema.parse(body);
 
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
 
     const id = data.user?.id as string;
     const { error: profileError } = await supabase.from("competitors").insert({
-      id: id,
+      user_id: id,
       firstname,
       lastname,
       day_of_birth: format(new Date(dayOfBirth), "dd-MM-yyyy"),
