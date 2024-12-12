@@ -59,6 +59,8 @@ const formSchema = z.object({
 });
 
 export default function Signup(props: { searchParams: Promise<Message> }) {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
   const searchParams = React.use(props.searchParams);
   if ("message" in searchParams) {
     return (
@@ -82,7 +84,7 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    debugger;
+    setIsSubmitting(true);
     let res;
     try {
       res = await fetch("/sign-up/api/competitor", {
@@ -96,6 +98,8 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
         "/sign-up/competitor",
         "Nie udało się połączyć z serwerem.",
       );
+    } finally {
+      setIsSubmitting(false);
     }
 
     const data = await res.json();
@@ -271,7 +275,9 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
             )}
           />
 
-          <SubmitButton pendingText="Proszę czekać..">Załóż konto</SubmitButton>
+          <SubmitButton pending={isSubmitting} pendingText="Proszę czekać..">
+            Załóż konto
+          </SubmitButton>
           <StatusMessage message={searchParams} />
         </form>
       </Form>

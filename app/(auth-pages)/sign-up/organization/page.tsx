@@ -22,6 +22,7 @@ import {
   FormMessage as StatusMessage,
   Message,
 } from "@/components/form-message";
+import { SubmitButton } from "@/components/submit-button";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Podaj prawidłowy adres e-mail" }),
@@ -35,6 +36,8 @@ const formSchema = z.object({
 });
 
 export default function Signup(props: { searchParams: Promise<Message> }) {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
   const searchParams = React.use(props.searchParams);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,6 +51,7 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
     let res;
     try {
       res = await fetch("/sign-up/api/organization", {
@@ -61,6 +65,8 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
         "/sign-up/organization",
         "Nie udało się połączyć z serwerem.",
       );
+    } finally {
+      setIsSubmitting(false);
     }
 
     const data = await res.json();
@@ -156,7 +162,9 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
             )}
           />
 
-          <Button type="submit">Załóż konto</Button>
+          <SubmitButton pending={isSubmitting} pendingText="Proszę czekać..">
+            Załóż konto
+          </SubmitButton>
           <StatusMessage message={searchParams} />
         </form>
       </Form>
