@@ -52,7 +52,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          account_type: "competitor",
+        },
+      },
+    });
 
     if (error) {
       return NextResponse.json({ error: `${error.message}` }, { status: 400 });

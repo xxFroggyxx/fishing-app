@@ -39,16 +39,20 @@ export async function POST(request: Request) {
     );
 
     if (!isUnique) {
-      console.log("Znaleziono");
       return NextResponse.json(
         { error: "Użytkownik z tym e-mailem już istnieje." },
         { status: 400 },
       );
     }
 
-    const { data, error } = await supabase.auth.admin.createUser({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          account_type: "organization",
+        },
+      },
     });
 
     if (error) {
@@ -57,7 +61,6 @@ export async function POST(request: Request) {
 
     const id = data.user?.id as string;
 
-    // Dodawanie danych organizacji do tabeli "organizations"
     const { error: profileError } = await supabase
       .from("organizations")
       .insert({
@@ -65,7 +68,7 @@ export async function POST(request: Request) {
         organization_name: organizationName,
         address,
         phone,
-        is_verified: false, // Organizacja wymaga weryfikacji przez administratora
+        is_verified: false, // Organizacja wymaga weryfikacji przez administratora, aby tworzyć wydarzenia
       });
 
     if (profileError) {
