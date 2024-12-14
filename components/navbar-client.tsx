@@ -42,6 +42,7 @@ export default function NavbarClient({ user }: any) {
           <Link href={"/"}>Zawody</Link>
           <Link href={"/"}>Blog</Link>
           <Link href={"/"}>Kontakt</Link>
+          <Link href={"/tournaments"}>Zawody</Link>
         </div>
         {user ? (
           <div className="hidden lg:flex lg:items-center lg:gap-4">
@@ -78,6 +79,7 @@ export default function NavbarClient({ user }: any) {
               <Link href={"/"}>Zawody</Link>
               <Link href={"/"}>Blog</Link>
               <Link href={"/"}>Kontakt</Link>
+              <Link href={"/tournaments"}>Zawody</Link>
             </div>
 
             <div className="" onClick={handleCloseMenu}>
