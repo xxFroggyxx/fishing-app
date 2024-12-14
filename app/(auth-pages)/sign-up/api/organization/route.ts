@@ -51,6 +51,7 @@ export async function POST(request: Request) {
       options: {
         data: {
           account_type: "organization",
+          is_verified_by_administrator: false,
         },
       },
     });
@@ -68,7 +69,6 @@ export async function POST(request: Request) {
         organization_name: organizationName,
         address,
         phone,
-        is_verified: false, // Organizacja wymaga weryfikacji przez administratora, aby tworzyć wydarzenia
       });
 
     if (profileError) {
