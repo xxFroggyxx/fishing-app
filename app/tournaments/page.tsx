@@ -178,7 +178,8 @@ export default function Tournaments() {
             );
             return (
               <TournamentCard
-                key={index}
+                key={tournament.id}
+                id={tournament.id}
                 title={tournament.name}
                 method={tournament.details.method}
                 when={formattedDatePL}

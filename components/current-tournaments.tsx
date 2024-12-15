@@ -30,10 +30,9 @@ export interface Tournament {
     };
     sponsors: string[] | null;
     description: string;
-    max_participants: number;
   };
   when: string;
-  referee: string;
+  referee: { competitors: { firstname: string; lastname: string } };
   entry_fee: number;
   created_at: string;
   official: boolean;
@@ -70,11 +69,16 @@ export default async function CurrentTournaments() {
 
   return (
     <div className="flex flex-col items-center space-y-8">
-      <h2 className="mb-8 text-center text-3xl font-bold dark:text-white">
-        Aktualnie rozgrywane zawody
-      </h2>
+      <div className="text-center">
+        <h2 className="text-center text-3xl font-bold dark:text-white">
+          Aktualnie rozgrywane zawody
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          Trzy najbliższe wydarzenia.{" "}
+        </p>
+      </div>
       <div className="grid gap-8 md:grid-cols-3">
-        {tournaments.map((tournament, index) => {
+        {tournaments.map((tournament) => {
           const formattedDatePL = format(
             parseISO(tournament.when),
             "dd MMMM yyyy, HH:mm",
@@ -84,7 +88,8 @@ export default async function CurrentTournaments() {
           );
           return (
             <TournamentCard
-              key={index}
+              key={tournament.id}
+              id={tournament.id}
               title={tournament.name}
               method={tournament.details.method}
               when={formattedDatePL}

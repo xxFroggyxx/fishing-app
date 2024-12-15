@@ -13,7 +13,6 @@ export default function NavbarClient({ user }: any) {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
-    console.log("Zmiana!", isMobileMenuOpen);
   };
 
   const handleCloseMenu = () => {
@@ -43,6 +42,11 @@ export default function NavbarClient({ user }: any) {
           <Link href={"/"}>Blog</Link>
           <Link href={"/"}>Kontakt</Link>
           <Link href={"/tournaments"}>Zawody</Link>
+          {user && (
+            <Link href={"/tournaments/new"} className="underline">
+              Utwórz wydarzenie
+            </Link>
+          )}
         </div>
         {user ? (
           <div className="hidden lg:flex lg:items-center lg:gap-4">
@@ -80,6 +84,11 @@ export default function NavbarClient({ user }: any) {
               <Link href={"/"}>Blog</Link>
               <Link href={"/"}>Kontakt</Link>
               <Link href={"/tournaments"}>Zawody</Link>
+              {user && (
+                <Link href={"/tournaments/new"} className="underline">
+                  Utwórz wydarzenie
+                </Link>
+              )}
             </div>
 
             <div className="" onClick={handleCloseMenu}>

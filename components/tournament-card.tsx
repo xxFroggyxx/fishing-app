@@ -10,9 +10,11 @@ interface TournamentCardProps {
   when: string;
   where: string;
   official: boolean;
+  id: string;
 }
 
 export default function TournamentCard({
+  id,
   imageOptions,
   title,
   method,
@@ -21,7 +23,7 @@ export default function TournamentCard({
   official,
 }: TournamentCardProps) {
   return (
-    <Link href="/">
+    <Link href={`/tournaments/${id}`}>
       <div className="border-b-foreground/1 relative max-w-sm overflow-hidden rounded-lg border shadow-md transition-transform hover:scale-105">
         {official && (
           <div className="absolute right-0 top-0 rounded-bl-lg bg-red-500 px-3 py-1 text-xs font-bold uppercase">
