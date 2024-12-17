@@ -39,8 +39,9 @@ import {
   Message,
 } from "@/components/form-message";
 import { User } from "@supabase/supabase-js";
-import { SubmitButton } from "@/components/submit-button";
 import { encodedRedirect } from "@/utils/utils";
+import { Tournament } from "@/components/current-tournaments";
+import { redirect } from "next/navigation";
 
 interface Referee {
   id: string;
@@ -67,6 +68,13 @@ const formSchema = z.object({
   }),
 });
 
+function splitDateTime(input: string) {
+  const dateObj = new Date(input);
+  const time = dateObj.toISOString().split("T")[1].slice(0, 5);
+
+  return time;
+}
+
 const generateTimeOptions = () => {
   const options = [];
   for (let hour = 0; hour < 24; hour++) {
@@ -82,11 +90,10 @@ const generateTimeOptions = () => {
   return options;
 };
 
-export default function TournamentNewClient(props: {
-  user: User;
-  searchParams: Message;
+export default function TournamentEditClient(props: {
+  tournament: Tournament;
 }) {
-  const searchParams = props.searchParams;
+  const { id, name, details, entry_fee, when, referee } = props.tournament;
   const [refeers, setRefeers] = useState<Referee[] | null>(null);
 
   useEffect(() => {
@@ -113,25 +120,27 @@ export default function TournamentNewClient(props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      when: new Date(),
-      referee: "",
-      entry_fee: "",
+      name: name,
+      when: new Date(when),
+      time: splitDateTime(when),
+      referee: `${referee.id}`,
+      entry_fee: entry_fee.toString(),
       details: {
-        method: "Spławik",
+        method: details.method as "Feeder" | "Spławik",
         location: {
-          name: "",
+          name: details.location.name,
         },
-        description: "",
+        description: details.description,
       },
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    debugger;
     let res;
     try {
-      res = await fetch("http://localhost:3000/tournaments/api/new", {
-        method: "POST",
+      res = await fetch(`http://localhost:3000/tournaments/api/${id}/edit`, {
+        method: "PUT",
         body: JSON.stringify(values),
         headers: {
           "Content-Type": "application/json",
@@ -148,16 +157,16 @@ export default function TournamentNewClient(props: {
     const data = await res.json();
 
     if (!res.ok) {
-      return encodedRedirect("error", "/tournaments/new/", data.error);
+      return console.error(data.error);
     }
 
-    return encodedRedirect("success", "/tournaments/new/", data.message);
+    return redirect(`/tournaments/${id}`);
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <h1 className="text-2xl font-medium">Stwórz wydarzenie</h1>
+        <h1 className="text-2xl font-medium">Edytuj wydarzenie</h1>
         <FormField
           control={form.control}
           name="name"
@@ -349,8 +358,7 @@ export default function TournamentNewClient(props: {
           )}
         />
 
-        <Button type="submit">Stwórz wydarzenie</Button>
-        <StatusMessage message={searchParams} />
+        <Button type="submit">Edytuj wydarzenie</Button>
       </form>
     </Form>
   );

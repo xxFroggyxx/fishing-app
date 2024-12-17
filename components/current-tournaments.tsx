@@ -8,7 +8,7 @@ import Link from "next/link";
 export interface Tournament {
   [x: string]: string | string[] | object | number | boolean;
   id: string;
-  onwer_id: string;
+  owner_id: string;
   name: string;
   details: {
     notes: string;
@@ -32,7 +32,10 @@ export interface Tournament {
     description: string;
   };
   when: string;
-  referee: { competitors: { firstname: string; lastname: string } };
+  referee: {
+    id: number;
+    competitors: { firstname: string; lastname: string };
+  };
   entry_fee: number;
   created_at: string;
   official: boolean;
