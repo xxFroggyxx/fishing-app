@@ -27,12 +27,6 @@ export default async function EditPage({
 
   const tournament = (await response.json()) as Tournament;
 
-  const formattedDatePL = format(
-    parseISO(tournament.when),
-    "EEEE, dd MMMM yyyy, HH:mm",
-    { locale: pl },
-  );
-
   if (!user || user.id !== tournament.owner_id) {
     return redirect(`tournaments/${slug}`);
   }

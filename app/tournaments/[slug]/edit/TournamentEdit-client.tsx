@@ -123,7 +123,7 @@ export default function TournamentEditClient(props: {
       name: name,
       when: new Date(when),
       time: splitDateTime(when),
-      referee: `${referee.id}`,
+      referee: referee?.id ? `${referee.id}` : "",
       entry_fee: entry_fee.toString(),
       details: {
         method: details.method as "Feeder" | "Spławik",
