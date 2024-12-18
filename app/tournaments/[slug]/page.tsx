@@ -22,7 +22,6 @@ export default async function Page({
   }
 
   const tournament = (await response.json()) as Tournament;
-  console.log(tournament);
 
   const { data: competitorData, error: competitorError } = await supabase
     .from("competitors")
