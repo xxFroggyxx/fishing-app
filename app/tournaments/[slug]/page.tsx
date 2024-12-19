@@ -30,7 +30,7 @@ export default async function Page({
   const { data: competitorData, error: competitorError } = await supabase
     .from("competitors")
     .select("id")
-    .eq("user_id", user?.id) // tutaj user powininien być przecież??? FIXED?
+    .eq("user_id", user?.id)
     .single();
 
   const { data: isUserRegistred, error } = await supabase

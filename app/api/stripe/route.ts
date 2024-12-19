@@ -6,7 +6,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json(); // Pobranie danych z requestu, jeśli potrzebujesz dynamicznych danych (np. kwoty)
+    const body = await req.json();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card", "blik", "p24"],
       line_items: [
