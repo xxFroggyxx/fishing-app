@@ -16,29 +16,23 @@ const stripePromise = loadStripe(
 );
 
 export default function ClientTournament(props: {
+  searchParams: Message;
   tournament: Tournament;
   user: User | null;
   slug: string;
   competitorData: any;
   isUserRegistred: any | null;
 }) {
-  const { tournament, user, slug, competitorData, isUserRegistred } = props;
+  const {
+    searchParams,
+    tournament,
+    user,
+    slug,
+    competitorData,
+    isUserRegistred,
+  } = props;
   const router = useRouter();
   const supabase = createClient();
-
-  React.useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      console.log("Order placed! You will receive an email confirmation.");
-    }
-
-    if (query.get("canceled")) {
-      console.log(
-        "Order canceled -- continue to shop around and checkout when you’re ready.",
-      );
-    }
-  }, []);
 
   const formattedDatePL = format(
     parseISO(tournament.when),
@@ -223,6 +217,12 @@ export default function ClientTournament(props: {
           <Link href={`/tournaments/${slug}/edit`}>
             <Button variant={"secondary"}>Edytuj wydarzenie</Button>
           </Link>
+        )}
+
+        {searchParams && (
+          <div className="align-center flex justify-center">
+            <FormMessage message={searchParams} />
+          </div>
         )}
       </div>
     </div>

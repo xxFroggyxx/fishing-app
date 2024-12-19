@@ -1,13 +1,17 @@
 import ClientTournament from "@/app/tournaments/[slug]/client-tournament";
 import { Tournament } from "@/components/current-tournaments";
+import { Message } from "@/components/form-message";
 import { createClient } from "@/utils/supabase/server";
 import React from "react";
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<Message>;
 }) {
+  const resolvedSearchParams = await searchParams;
   const supabase = await createClient();
 
   const {
@@ -43,6 +47,7 @@ export default async function Page({
       slug={slug}
       competitorData={competitorData}
       isUserRegistred={isUserRegistred}
+      searchParams={resolvedSearchParams}
     />
   );
 }
