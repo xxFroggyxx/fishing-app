@@ -1,14 +1,15 @@
 "use client";
 
 import { Tournament } from "@/components/current-tournaments";
+import { FormMessage, Message } from "@/components/form-message";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { loadStripe } from "@stripe/stripe-js";
 import { User } from "@supabase/supabase-js";
 import { format, parseISO } from "date-fns";
-import { is, pl } from "date-fns/locale";
+import { pl } from "date-fns/locale";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const stripePromise = loadStripe(
@@ -45,19 +46,24 @@ export default function ClientTournament(props: {
       return;
     }
 
+    const { data: existingRegistration, error: selectError } = await supabase
+      .from("registration")
+      .select("*")
+      .eq("id_competition", tournament.id)
+      .eq("id_competitor", competitorData.id)
+      .single();
+
     const now = new Date();
-    const { error } = await supabase.from("registration").insert([
-      {
-        id_competition: tournament.id,
-        id_competitor: competitorData.id,
-        is_paid: tournament.entry_fee === 0,
-        when_paid: tournament.entry_fee === 0 ? now : null,
-        created_at: now,
-      },
-    ]);
-    if (error) {
-      console.error(`Nie udało się zapisać: ${error.message}`);
-      return;
+    if (!existingRegistration) {
+      const { error } = await supabase.from("registration").insert([
+        {
+          id_competition: tournament.id,
+          id_competitor: competitorData.id,
+          is_paid: tournament.entry_fee === 0 ? true : false,
+          when_paid: tournament.entry_fee === 0 ? now : null,
+          created_at: now,
+        },
+      ]);
     }
 
     if (tournament.entry_fee > 0) {
@@ -67,7 +73,7 @@ export default function ClientTournament(props: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          entry_fee: tournament.entry_fee * 100, // Przekazujemy kwotę w groszach
+          entry_fee: tournament.entry_fee * 100,
           tournament_name: tournament.name,
           email: user.email,
           id_competition: tournament.id,
@@ -82,7 +88,10 @@ export default function ClientTournament(props: {
       const { url } = await response.json();
 
       router.push(url);
+      return;
     }
+
+    router.refresh();
   }
 
   return (
