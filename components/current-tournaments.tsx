@@ -34,11 +34,12 @@ export interface Tournament {
   when: string;
   referee: {
     id: number;
-    competitors: { firstname: string; lastname: string };
+    competitors: { user_id: string; firstname: string; lastname: string };
   };
   entry_fee: number;
   created_at: string;
   official: boolean;
+  status: string;
 }
 
 const fetchLatestTournaments = async () => {

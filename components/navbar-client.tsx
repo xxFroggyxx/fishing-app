@@ -41,7 +41,9 @@ export default function NavbarClient({ user }: any) {
           <Link href={"/"}>Zawody</Link>
           <Link href={"/"}>Blog</Link>
           <Link href={"/"}>Kontakt</Link>
-          <Link href={"/tournaments"}>Zawody</Link>
+          <Link href={"/tournaments?sortOrder=asc&method=all&official=all"}>
+            Zawody
+          </Link>
           {user && (
             <Link href={"/tournaments/new"} className="underline">
               Utwórz wydarzenie
@@ -83,7 +85,9 @@ export default function NavbarClient({ user }: any) {
               <Link href={"/"}>Zawody</Link>
               <Link href={"/"}>Blog</Link>
               <Link href={"/"}>Kontakt</Link>
-              <Link href={"/tournaments"}>Zawody</Link>
+              <Link href={"/tournaments?sortOrder=asc&method=all&official=all"}>
+                Zawody
+              </Link>
               {user && (
                 <Link href={"/tournaments/new"} className="underline">
                   Utwórz wydarzenie

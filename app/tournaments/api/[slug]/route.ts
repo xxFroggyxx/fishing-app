@@ -10,7 +10,9 @@ export async function GET(
 
   const { data, error } = await supabase
     .from("competitions")
-    .select("*,  referee:referees(id, competitors(firstname, lastname))")
+    .select(
+      "*,  referee:referees(id, competitors(user_id, firstname, lastname))",
+    )
     .eq("id", slug)
     .single();
 

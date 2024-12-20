@@ -40,6 +40,18 @@ export default async function Page({
     .eq("id_competitor", competitorData?.id)
     .single();
 
+  // let competitorWholeData = null;
+  // if (tournament.status === "inProgress") {
+  const { data: competitorWholeData } = await supabase
+    .from("results")
+    .select(
+      "*, registration:registration(*, competitors(user_id, firstname, lastname))",
+    );
+
+  // competitorWholeData = competitors;
+  // }
+  // console.log(competitorWholeData);
+
   return (
     <ClientTournament
       tournament={tournament}
@@ -48,6 +60,7 @@ export default async function Page({
       competitorData={competitorData}
       isUserRegistred={isUserRegistred}
       searchParams={resolvedSearchParams}
+      competitorWholeData={competitorWholeData || []}
     />
   );
 }
