@@ -205,12 +205,14 @@ export default function ClientTournament(props: {
       .select(
         "*, registration:registration(*, competitors(user_id, firstname, lastname))",
       )
-      .eq("registration.id_competition", tournament.id);
+      .eq("registration.id_competition", tournament.id)
+      .not("registration", "is", null);
 
     if (error) {
       console.log("Nie udało się pobrać wyników:", error);
       return [];
     }
+    console.log(data);
 
     return data || [];
   }
